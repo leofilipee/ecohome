@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHome Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="index.html" class="brand">
+                <div class="logo"><img src="images/logo.jpg" alt="EcoHome logo"></div>
+                <div class="brand-text">EcoHome</div>
+            </a>
+            <div style="display:flex;align-items:center;gap:12px">
+                <a href="#" id="openHelpBtn" class="help-link" aria-label="Ajuda" style="display:flex;align-items:center;justify-content:center"><img src="images/help.png" alt="Ajuda" style="width:30px;height:30px;filter:brightness(0);display:block"></a>
+                <a href="profile.html" class="profile"> <div class="avatar"><img id="topbarAvatarImg" src="images/user.png" alt="Perfil"></div> </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="metrics">
+            <div class="card metric">
+                <div class="label">Consumo Total</div>
+                <div class="value">-</div>
+                <div class="sub">Este mês</div>
+            </div>
+            <div class="card metric">
+                <div class="label">Custo Estimado</div>
+                <div class="value">-</div>
+                <div class="sub">Este mês</div>
+            </div>
+            <div class="card metric">
+                <div class="label">Poupança</div>
+                <div class="value">-</div>
+                <div class="sub">vs. mês anterior</div>
+            </div>
+        </section>
+
+        <section class="actions">
+            <button id="openInvoiceBtn" class="btn primary">+ Inserir nova fatura</button>
+            <button id="viewInvoicesBtn" class="btn secondary">Ver faturas</button>
+            <button class="btn secondary">Dicas</button>
+            
+        </section>
+
+        <section class="panels">
+            <div class="panel pie-panel">
+                <div class="panel-header">
+                    <h3>Consumo por Divisão</h3>
+                    <div class="panel-actions">
+                        <button class="btn primary open-new-equipment">Adicionar novo equipamento</button>
+                    </div>
+                </div>
+                <div class="chart-area"><canvas id="pieChart"></canvas></div>
+                <ul class="legend-list"></ul>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Progressão do Consumo</h3>
+                    <div class="panel-controls">
+                        <label for="yearFilterSelect" class="sr-only">Selecionar ano</label>
+                        <select id="yearFilterSelect" aria-label="Filtrar por ano">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-area"><canvas id="barChart"></canvas></div>
+                <div class="panel-footer" style="margin-top:10px">
+                    <button id="openCompareBtn" class="btn muted">Comparar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 EcoHome. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal: Detalhe da Divisão (mostra equipamentos da divisão clicada no pie) -->
+    <div id="divisionModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="divisionModalTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header"><h3 id="divisionModalTitle">Equipamentos</h3></div>
+            <div class="modal-body">
+                <div id="divisionModalBody">
+                    <!-- tabela de equipamentos será injetada aqui -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-cancel">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Novo Equipamento (moved from profile so button on index opens it) -->
+    <div id="newEquipmentModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" aria-label="Fechar">✕</button>
+            <div class="modal-header">
+                <h3 id="modalTitle">Novo Equipamento</h3>
+            </div>
+            <form class="modal-body" id="newEquipmentForm">
+                <label>Nome do Equipamento
+                    <input type="text" name="name" placeholder="Ex: Ar Condicionado Quarto">
+                </label>
+                <label>Potência (W)
+                    <input type="number" name="power" placeholder="Ex: 2000">
+                </label>
+                <label>Classe Energética
+                    <select name="class">
+                        <option value="">Selecione a classe</option>
+                        <option value="A+++">A+++</option>
+                        <option value="A++">A++</option>
+                        <option value="A+">A+</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
+                </label>
+                <label>Horas de Uso Diário
+                    <input type="text" name="hours" placeholder="Ex: 8">
+                </label>
+                <label>Divisão
+                    <select name="room">
+                        <option value="">Selecione a divisão</option>
+                        <option>Sala</option>
+                        <option>Cozinha</option>
+                        <option>Lavandaria</option>
+                        <option>Quarto</option>
+                        <option>Escritório</option>
+                        <option>Casa de Banho</option>
+                        <option>Exterior</option>
+                        <option>Outros</option>
+                    </select>
+                </label>
+            </form>
+            <div class="modal-footer">
+                <button class="btn muted modal-cancel">Cancelar</button>
+                <button class="btn primary modal-save">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Nova Fatura -->
+    <div id="newInvoiceModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoiceTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header"><h3 id="invoiceTitle">Nova Fatura</h3></div>
+            <div class="modal-body">
+                <form id="newInvoiceForm">
+                    <label>Mês
+                        <input type="month" name="month" placeholder="Ex: 2025-11" />
+                    </label>
+                    <label>Consumo (kWh)
+                        <input type="number" name="consumption" step="0.01" placeholder="Ex: 846" />
+                    </label>
+                    <label>Custo Total (€)
+                        <input type="number" name="cost" step="0.01" placeholder="Ex: 126.90" />
+                    </label>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-cancel">Cancelar</button>
+                <button type="submit" form="newInvoiceForm" class="btn primary modal-save-invoice">Guardar Fatura</button>
+            </div>
+        </div>
+    </div>
+            <!-- Modal: Ver Faturas -->
+            <div id="viewInvoicesModal" class="modal-overlay" aria-hidden="true">
+                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="viewInvoicesTitle">
+                    <button class="modal-close" aria-label="Fechar">×</button>
+                    <div class="modal-header"><h3 id="viewInvoicesTitle">Faturas Gravadas</h3></div>
+                    <div class="modal-body">
+                        <div class="invoice-list">
+                            <table class="invoice-table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Ordem</th>
+                                        <th data-sort="month" class="sortable" style="text-align:left">Mês</th>
+                                        <th data-sort="consumption" class="sortable">Consumo (kWh)</th>
+                                        <th data-sort="cost" class="sortable">Custo (€)</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoicesTableBody">
+                                    <!-- Rows injected by script -->
+                                </tbody>
+                            </table>
+                            <div class="empty-state" style="display:none;margin-top:12px;color:var(--muted)">Não existem faturas registadas.</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn modal-cancel">Fechar</button>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Modal: Comparar Anos -->
+    <div id="compareModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header"><h3 id="compareTitle">Comparar Anos</h3></div>
+            <div class="modal-body">
+                <form id="compareForm">
+                    <div id="compareSelects" class="compare-selects">
+                        <label>Ano
+                            <select class="compare-year" name="year[]"></select>
+                        </label>
+                        <label>Ano
+                            <select class="compare-year" name="year[]"></select>
+                        </label>
+                    </div>
+                    <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <button type="button" id="addCompareYear" class="btn">Adicionar</button>
+                            <button type="button" id="removeCompareYear" class="btn" style="display:none">Remover</button>
+                        </div>
+                        <div style="display:flex;gap:8px">
+                            <button type="button" class="btn modal-cancel">Cancelar</button>
+                            <button type="submit" class="btn primary">Comparar</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="chart-area" style="margin-top:12px"><canvas id="compareChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Guia do Utilizador -->
+    <div id="helpModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header">
+                <h3 id="helpModalTitle">Guia do Utilizador</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Bem-vindo ao EcoHome!</h4>
+                <p>Esta plataforma ajuda-o a controlar e otimizar o consumo energético da sua casa. Aqui estão algumas dicas para começar:</p>
+                
+                <h5>📊 Dashboard Principal</h5>
+                <ul>
+                    <li><strong>Consumo Total:</strong> Visualize o consumo total de energia do mês atual</li>
+                    <li><strong>Custo Estimado:</strong> Acompanhe os custos mensais com base nas suas faturas</li>
+                    <li><strong>Poupança:</strong> Compare com o mês anterior e veja a evolução</li>
+                </ul>
+
+                <h5>⚡ Gestão de Equipamentos</h5>
+                <ul>
+                    <li>Adicione equipamentos clicando em "Adicionar novo equipamento"</li>
+                    <li>Registe a potência, classe energética e horas de uso diário</li>
+                    <li>Organize por divisões para melhor controlo</li>
+                    <li>Use o botão "Comparar" para analisar o consumo entre equipamentos</li>
+                </ul>
+
+                <h5>📄 Faturas</h5>
+                <ul>
+                    <li>Insira as suas faturas mensais para cálculos precisos</li>
+                    <li>A plataforma calcula automaticamente o custo por kWh</li>
+                    <li>Consulte o histórico clicando em "Ver faturas"</li>
+                </ul>
+
+                <h5>👤 Perfil</h5>
+                <ul>
+                    <li>Aceda ao seu perfil através do ícone no canto superior direito</li>
+                    <li>Edite os seus dados pessoais a qualquer momento</li>
+                    <li>Gere todos os seus equipamentos numa única vista</li>
+                </ul>
+
+                <p><strong>Dica:</strong> Mantenha os dados atualizados para obter recomendações mais precisas e identificar oportunidades de poupança!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+    <!-- Modal: Confirmar Edição de Fatura -->
+    <div id="confirmEditModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmEditTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header"><h3 id="confirmEditTitle">Confirmar alteração</h3></div>
+            <div class="modal-body">
+                <p>Tem a certeza que deseja gravar as alterações nesta fatura?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-cancel">Cancelar</button>
+                <button type="button" id="confirmEditBtn" class="btn primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+    <!-- moved viewInvoicesModal into body earlier; removed duplicate trailing block -->

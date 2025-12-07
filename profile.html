@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Perfil — EcoHome</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="index.html" class="brand">
+                <div class="logo"><img src="images/logo.jpg" alt="EcoHome logo"></div>
+                <div class="brand-text">EcoHome</div>
+            </a>
+            <div style="display:flex;align-items:center;gap:12px">
+                <a href="#" id="openHelpBtn" class="help-link" aria-label="Ajuda" style="display:flex;align-items:center;justify-content:center"><img src="images/help.png" alt="Ajuda" style="width:30px;height:30px;filter:brightness(0);display:block"></a>
+                <a href="profile.html" class="profile"> <div class="avatar"><img src="images/user.png" alt="Perfil"></div> </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="profile-section">
+            <div class="profile-header">
+                <h1>Perfil do Utilizador</h1>
+                <p class="subtitle">Gerir as suas informações pessoais e equipamentos</p>
+            </div>
+
+            <div class="profile-card card">
+                <h3>Dados do Utilizador</h3>
+                <div class="profile-info">
+                    <div class="info-row">
+                        <div class="info-label">Nome</div>
+                        <div class="info-value" id="profileNameValue">João Silva</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Email</div>
+                        <div class="info-value" id="profileEmailValue">joao.silva@email.com</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Contacto Telemóvel</div>
+                        <div class="info-value" id="profilePhoneValue">+351 912 345 678</div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+                    <button class="btn primary edit-profile-btn" aria-label="Editar perfil">✎ Editar</button>
+                    <button id="logoutBtn" class="btn secondary" aria-label="Sair">Log out</button>
+                </div>
+            </div>
+        </section>
+        <!-- Modal: Novo Equipamento -->
+        <div id="newEquipmentModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <button class="modal-close" aria-label="Fechar">✕</button>
+                <div class="modal-header">
+                    <h3 id="modalTitle">Novo Equipamento</h3>
+                </div>
+                <form class="modal-body" id="newEquipmentForm">
+                    <label>Nome do Equipamento
+                        <input type="text" name="name" placeholder="Ex: Ar Condicionado Quarto">
+                    </label>
+                    <label>Potência (W)
+                        <input type="number" name="power" placeholder="Ex: 2000">
+                    </label>
+                    <label>Classe Energética
+                        <select name="class">
+                            <option value="">Selecione a classe</option>
+                            <option value="A+++">A+++</option>
+                            <option value="A++">A++</option>
+                            <option value="A+">A+</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                        </select>
+                    </label>
+                    <label>Horas de Uso Diário
+                        <input type="text" name="hours" placeholder="Ex: 8">
+                    </label>
+                    <label>Divisão
+                        <select name="room">
+                            <option value="">Selecione a divisão</option>
+                            <option>Sala</option>
+                            <option>Cozinha</option>
+                            <option>Lavandaria</option>
+                            <option>Quarto</option>
+                            <option>Escritório</option>
+                            <option>Casa de Banho</option>
+                            <option>Exterior</option>
+                            <option>Outros</option>
+                        </select>
+                    </label>
+                </form>
+                <div class="modal-footer">
+                    <button class="btn muted modal-cancel">Cancelar</button>
+                    <button class="btn primary modal-save">Guardar</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal: Confirmar Eliminação (in-app) -->
+        <div id="confirmDeleteModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmDeleteTitle">
+                <button class="modal-close" aria-label="Fechar">✕</button>
+                <div class="modal-header">
+                    <h3 id="confirmDeleteTitle">Confirmar eliminação</h3>
+                </div>
+                <div class="modal-body" style="padding:12px 0">
+                    <p>Tem a certeza que deseja eliminar este equipamento?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn muted confirm-delete-cancel">Cancelar</button>
+                    <button class="btn primary confirm-delete-yes">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal: Editar Perfil -->
+        <div id="editProfileModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editProfileTitle">
+                <button class="modal-close" aria-label="Fechar">✕</button>
+                <div class="modal-header">
+                    <h3 id="editProfileTitle">Editar Perfil</h3>
+                </div>
+                <form class="modal-body" id="editProfileForm">
+                    <label>Nome
+                        <input type="text" id="profileNameInput" name="name" placeholder="Ex: João Silva">
+                    </label>
+                    <label>Email
+                        <input type="email" id="profileEmailInput" name="email" placeholder="exemplo@email.com">
+                    </label>
+                    <label>Contacto Telemóvel
+                        <input type="text" id="profilePhoneInput" name="phone" placeholder="Ex: +351 912 345 678">
+                    </label>
+                </form>
+                <div class="modal-footer">
+                    <button class="btn muted modal-cancel">Cancelar</button>
+                    <button class="btn primary modal-save" id="saveProfileBtn">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="panel" style="margin-top:18px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3>Meus Equipamentos <span id="equipmentsCount">(0)</span></h3>
+            </div>
+
+            <div style="overflow:auto">
+                <table style="width:100%;border-collapse:collapse;font-size:14px">
+                    <thead>
+                        <tr style="text-align:left;color:#6b7280">
+                            <th style="width:44px;padding:14px 12px;border-bottom:1px solid #eef2f7"></th>
+                            <th class="sortable" style="padding:14px 12px;border-bottom:1px solid #eef2f7">Nome</th>
+                            <th class="sortable" style="padding:14px 12px;border-bottom:1px solid #eef2f7">Potência</th>
+                            <th class="sortable" style="padding:14px 12px;border-bottom:1px solid #eef2f7">Classe</th>
+                            <th class="sortable" style="padding:14px 12px;border-bottom:1px solid #eef2f7">Horas/Dia</th>
+                            <th class="sortable" style="padding:14px 12px;border-bottom:1px solid #eef2f7">Divisão</th>
+                            <th style="padding:14px 12px;border-bottom:1px solid #eef2f7">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="equipmentTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 EcoHome. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal: Guia do Utilizador -->
+    <div id="helpModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header">
+                <h3 id="helpModalTitle">Guia do Utilizador</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Bem-vindo ao EcoHome!</h4>
+                <p>Esta plataforma ajuda-o a controlar e otimizar o consumo energético da sua casa. Aqui estão algumas dicas para começar:</p>
+                
+                <h5>📊 Dashboard Principal</h5>
+                <ul>
+                    <li><strong>Consumo Total:</strong> Visualize o consumo total de energia do mês atual</li>
+                    <li><strong>Custo Estimado:</strong> Acompanhe os custos mensais com base nas suas faturas</li>
+                    <li><strong>Poupança:</strong> Compare com o mês anterior e veja a evolução</li>
+                </ul>
+
+                <h5>⚡ Gestão de Equipamentos</h5>
+                <ul>
+                    <li>Adicione equipamentos clicando em "Adicionar novo equipamento"</li>
+                    <li>Registe a potência, classe energética e horas de uso diário</li>
+                    <li>Organize por divisões para melhor controlo</li>
+                    <li>Use o botão "Comparar" para analisar o consumo entre equipamentos</li>
+                </ul>
+
+                <h5>📄 Faturas</h5>
+                <ul>
+                    <li>Insira as suas faturas mensais para cálculos precisos</li>
+                    <li>A plataforma calcula automaticamente o custo por kWh</li>
+                    <li>Consulte o histórico clicando em "Ver faturas"</li>
+                </ul>
+
+                <h5>👤 Perfil</h5>
+                <ul>
+                    <li>Aceda ao seu perfil através do ícone no canto superior direito</li>
+                    <li>Edite os seus dados pessoais a qualquer momento</li>
+                    <li>Gere todos os seus equipamentos numa única vista</li>
+                </ul>
+
+                <p><strong>Dica:</strong> Mantenha os dados atualizados para obter recomendações mais precisas e identificar oportunidades de poupança!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
