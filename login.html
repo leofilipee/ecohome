@@ -301,7 +301,7 @@
     @media (max-width:900px) {
       main {
         flex-direction: column;
-        background: transparent
+        background-color: white !important;
       }
 
       /* stacked: full width for both panels */
@@ -314,15 +314,18 @@
 
       /* on mobile stacked layout restore outer rounded corners for both panels */
       .left {
-        border-radius: 14px 14px 0 0
+        border-radius: 14px 14px 0 0;
+        width: 100%;
       }
 
       .right {
-        border-radius: 0 0 14px 14px
+        border-radius: 0 0 14px 14px;
+        width: 100%;
       }
 
       main {
-        max-width: 760px
+        max-width: 760px;
+        background: none
       }
 
       .brand-overlay {
@@ -415,7 +418,7 @@
               id="openRegisterLink">Registar</a></div>
           <div class="small" style="margin-top:10px; text-align:center;">
             <span>ou então </span>
-            <a href="index.html" id="guestAccessLink" style="color:var(--green); text-decoration:none">acessar sem
+            <a href="index.html" id="guestAccessLink" style="color:var(--green); text-decoration:none">aceder sem
               conta</a>
           </div>
         </form>
