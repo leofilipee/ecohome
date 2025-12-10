@@ -84,8 +84,16 @@
       main{max-width:760px}
       .brand-overlay{display:none}
       .brand-mobile{display:block}
-      /* restore register panel to document flow on mobile */
-      .right{position:static; top:auto; right:auto; left:auto; bottom:auto; display:block; opacity:1; transform:none; pointer-events:auto; margin-top:18px}
+      /* On mobile, show only the panel with aria-hidden="false" so login and register share the same space */
+      .left[aria-hidden="true"], .right[aria-hidden="true"]{display:none!important}
+      .left[aria-hidden="false"], .right[aria-hidden="false"]{display:block!important}
+      /* Make both panels occupy the same size: set main min-height and let panels fill it */
+      main{max-width:760px; min-height:520px}
+      .left, .right {height:100%}
+      /* ensure card width is consistent inside panels */
+      .card{max-width:520px; width:100%}
+      /* restore register panel to document flow on mobile (when visible) */
+      .right{position:static; top:auto; right:auto; left:auto; bottom:auto; opacity:1; transform:none; pointer-events:auto; margin-top:18px}
     }
 
     /* small visual polish */
