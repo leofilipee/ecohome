@@ -1,107 +1,393 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Entrar — EcoHome</title>
   <style>
-    :root{
-      --green:#2d8b5f;
-      --green-dark:#247246;
-      --muted:#6b7280;
-      --bg:#f8fafb;
-      --card-bg:#ffffff;
-      --radius:12px;
+    :root {
+      --green: #2d8b5f;
+      --green-dark: #247246;
+      --muted: #6b7280;
+      --bg: #f8fafb;
+      --card-bg: #ffffff;
+      --radius: 12px;
     }
-    *{box-sizing:border-box}
-    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:#2b2b2b; min-height:100vh; display:flex; align-items:center; justify-content:center}
-    main{position:relative; max-width:1200px; width:95%; margin:0; border-radius:14px; overflow:hidden; box-shadow:0 6px 24px rgba(16,24,40,0.08); display:flex; align-items:center; background:linear-gradient(90deg,#fff 55%, #f1fbf6 55%)}
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      margin: 0;
+      background: var(--bg);
+      color: #2b2b2b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    main {
+      position: relative;
+      max-width: 1200px;
+      width: 95%;
+      margin: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(16, 24, 40, 0.08);
+      display: flex;
+      align-items: center;
+      background: linear-gradient(90deg, #fff 55%, #f1fbf6 55%)
+    }
+
     /* split left/right 50/50 on desktop */
-    .left, .right{padding:56px; box-sizing:border-box; flex:0 0 50%; max-width:50%}
-    .left{background:var(--card-bg); border-radius:14px 0 0 14px; display:flex; align-items:center; justify-content:center}
-    .right{display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#ebfbf1 0%, #eafbf6 100%); border-radius:0 14px 14px 0;} 
+    .left,
+    .right {
+      padding: 56px;
+      box-sizing: border-box;
+      flex: 0 0 50%;
+      max-width: 50%
+    }
+
+    .left {
+      background: var(--card-bg);
+      border-radius: 14px 0 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #ebfbf1 0%, #eafbf6 100%);
+      border-radius: 0 14px 14px 0;
+    }
+
     /* fade transitions for panels */
-    .left, .right{transition:opacity 320ms ease, transform 320ms ease; will-change:opacity,transform}
+    .left,
+    .right {
+      transition: opacity 320ms ease, transform 320ms ease;
+      will-change: opacity, transform
+    }
+
     /* both panels white for consistency */
-    .left{background:#fff}
-    .register-panel, .reg-card{background:#fff}
+    .left {
+      background: #fff
+    }
+
+    .register-panel,
+    .reg-card {
+      background: #fff
+    }
+
     /* directional fade: when hidden move slightly toward overlay direction */
-    .left[aria-hidden="true"]{opacity:0; transform:translateX(-18px); pointer-events:none}
-    .left[aria-hidden="false"]{opacity:1; transform:translateX(0); pointer-events:auto}
+    .left[aria-hidden="true"] {
+      opacity: 0;
+      transform: translateX(-18px);
+      pointer-events: none
+    }
 
-    h1{font-size:28px; margin:0 0 22px; color:#23323a; text-align:center}
+    .left[aria-hidden="false"] {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 22px;
+      color: #23323a;
+      text-align: center
+    }
+
     /* uniformizar tamanho dos textos secundários (labels, link esquecido e texto de registo) */
-    label, .forgot, .small{display:block; font-size:14px; color:var(--muted); margin-bottom:8px}
-    .input{display:block; width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e6e9ee; background:#fff; font-size:15px; color:#1f2937}
-    .field{margin-bottom:18px}
-    .forgot{display:inline-block; margin-top:6px; font-size:14px; color:var(--green); text-decoration:none}
+    label,
+    .forgot,
+    .small {
+      display: block;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 8px
+    }
 
-    .btn{display:inline-block; background:var(--green); color:#fff; border:none; padding:12px 28px; border-radius:12px; font-size:16px; cursor:pointer; box-shadow:0 6px 12px rgba(45,139,95,0.12)}
-    .btn:active{transform:translateY(1px)}
+    .input {
+      display: block;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #e6e9ee;
+      background: #fff;
+      font-size: 15px;
+      color: #1f2937
+    }
 
-    .small{margin-top:16px; color:var(--muted); font-size:15px}
-    .small a{color:var(--green); text-decoration:none}
+    .field {
+      margin-bottom: 18px
+    }
+
+    .forgot {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--green);
+      text-decoration: none
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(45, 139, 95, 0.12)
+    }
+
+    .btn:active {
+      transform: translateY(1px)
+    }
+
+    .small {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .small a {
+      color: var(--green);
+      text-decoration: none
+    }
 
     /* right panel styles */
-    .brand{text-align:center}
-    .brand-mobile{display:none}
+    .brand {
+      text-align: center
+    }
+
+    .brand-mobile {
+      display: none
+    }
+
     /* reduzir o tamanho visual da logo para ficar proporcional ao painel */
-    .logo-wrap{width:88px; height:88px; margin:0 auto 14px}
-    .logo-wrap svg{width:100%; height:auto; display:block}
-    .brand h2{margin:0; font-size:22px; color:#213033}
-    .brand p{margin:8px 0 0; color:var(--muted); font-size:14px}
+    .logo-wrap {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 14px
+    }
+
+    .logo-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block
+    }
+
+    .brand h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #213033
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px
+    }
 
     /* register reveal */
-    .right{position:relative; overflow:visible}
-    .brand{transition:transform 520ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms}
+    .right {
+      position: relative;
+      overflow: visible
+    }
+
+    .brand {
+      transition: transform 520ms cubic-bezier(.2, .9, .2, 1), box-shadow 300ms
+    }
+
     /* overlay that sits over right column and can slide left to cover login */
-    .brand-overlay{position:absolute; top:0; right:0; width:50%; height:100%; display:flex; align-items:center; justify-content:center; z-index:40; background:linear-gradient(180deg,#ebfbf1 0%, #eafbf6 100%); transition:transform 560ms cubic-bezier(.2,.9,.2,1); box-shadow: -8px 0 24px rgba(16,24,40,0.06)}
-    .brand-overlay .brand-inner{ text-align:center; padding:56px; box-sizing:border-box; width:100%; }
+    .brand-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+      background: linear-gradient(180deg, #ebfbf1 0%, #eafbf6 100%);
+      transition: transform 560ms cubic-bezier(.2, .9, .2, 1);
+      box-shadow: -8px 0 24px rgba(16, 24, 40, 0.06)
+    }
+
+    .brand-overlay .brand-inner {
+      text-align: center;
+      padding: 56px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
     /* register panel appears from the right without changing layout height (desktop) */
-    .right{position:relative}
+    .right {
+      position: relative
+    }
+
     /* right section mirrors left: hidden by default until revealed */
-    .right{background:#fff}
-    .right[aria-hidden="true"]{opacity:0; transform:translateX(18px); pointer-events:none}
-    .right[aria-hidden="false"]{opacity:1; transform:translateX(0); pointer-events:auto}
+    .right {
+      background: #fff
+    }
+
+    .right[aria-hidden="true"] {
+      opacity: 0;
+      transform: translateX(18px);
+      pointer-events: none
+    }
+
+    .right[aria-hidden="false"] {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto
+    }
+
     /* make right section visually consistent with login card (no extra .card wrapper) */
-    .right{background:#fff; border-radius:0 14px 14px 0; box-shadow:0 6px 24px rgba(16,24,40,0.08)}
+    .right {
+      background: #fff;
+      border-radius: 0 14px 14px 0;
+      box-shadow: 0 6px 24px rgba(16, 24, 40, 0.08)
+    }
+
     /* When right section is visible (register open) we adjust brand-overlay and brand positioning using aria-hidden */
-    .brand-overlay[aria-hidden="true"]{transform:translateX(-100%); box-shadow: 8px 0 24px rgba(16,24,40,0.06)}
-    .brand-overlay[aria-hidden="true"] .brand{transform:translateX(72px)}
-    .register-actions{display:flex; gap:12px; justify-content:center; margin-top:18px}
-    .close-register{background:transparent; border:1px solid #e6e9ee; border-radius:12px; padding:12px 16px; cursor:pointer; color:#374151}
-    .right h1{font-size:28px; margin-bottom:14px; color:#23323a}
-    .right input.input{font-size:15px}
+    .brand-overlay[aria-hidden="true"] {
+      transform: translateX(-100%);
+      box-shadow: 8px 0 24px rgba(16, 24, 40, 0.06)
+    }
+
+    .brand-overlay[aria-hidden="true"] .brand {
+      transform: translateX(72px)
+    }
+
+    .register-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 18px
+    }
+
+    .close-register {
+      background: transparent;
+      border: 1px solid #e6e9ee;
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      color: #374151
+    }
+
+    .right h1 {
+      font-size: 28px;
+      margin-bottom: 14px;
+      color: #23323a
+    }
+
+    .right input.input {
+      font-size: 15px
+    }
 
     /* responsive */
-    @media (max-width:900px){
-      main{flex-direction:column; background:transparent}
+    @media (max-width:900px) {
+      main {
+        flex-direction: column;
+        background: transparent
+      }
+
       /* stacked: full width for both panels */
-      .left, .right{flex:0 0 100%; max-width:100%; padding:28px}
+      .left,
+      .right {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 28px
+      }
+
       /* on mobile stacked layout restore outer rounded corners for both panels */
-      .left{border-radius:14px 14px 0 0}
-      .right{border-radius:0 0 14px 14px}
-      main{max-width:760px}
-      .brand-overlay{display:none}
-      .brand-mobile{display:block}
+      .left {
+        border-radius: 14px 14px 0 0
+      }
+
+      .right {
+        border-radius: 0 0 14px 14px
+      }
+
+      main {
+        max-width: 760px
+      }
+
+      .brand-overlay {
+        display: none
+      }
+
+      .brand-mobile {
+        display: block
+      }
+
       /* On mobile, show only the panel with aria-hidden="false" so login and register share the same space */
-      .left[aria-hidden="true"], .right[aria-hidden="true"]{display:none!important}
-      .left[aria-hidden="false"], .right[aria-hidden="false"]{display:block!important}
+      .left[aria-hidden="true"],
+      .right[aria-hidden="true"] {
+        display: none !important
+      }
+
+      .left[aria-hidden="false"],
+      .right[aria-hidden="false"] {
+        display: block !important
+      }
+
       /* Make both panels occupy the same size: set main min-height and let panels fill it */
-      main{max-width:760px; min-height:520px}
-      .left, .right {height:100%}
+      main {
+        max-width: 760px;
+        min-height: 520px
+      }
+
+      .left,
+      .right {
+        height: 100%
+      }
+
       /* ensure card width is consistent inside panels */
-      .card{max-width:520px; width:100%}
+      .card {
+        max-width: 520px;
+        width: 100%
+      }
+
       /* restore register panel to document flow on mobile (when visible) */
-      .right{position:static; top:auto; right:auto; left:auto; bottom:auto; opacity:1; transform:none; pointer-events:auto; margin-top:18px}
+      .right {
+        position: static;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        margin-top: 18px
+      }
     }
 
     /* small visual polish */
-    .card{max-width:520px}
-    .field .input:focus{outline:none; border-color:rgba(45,139,95,0.9); box-shadow:0 4px 12px rgba(45,139,95,0.06)}
+    .card {
+      max-width: 520px
+    }
 
+    .field .input:focus {
+      outline: none;
+      border-color: rgba(45, 139, 95, 0.9);
+      box-shadow: 0 4px 12px rgba(45, 139, 95, 0.06)
+    }
   </style>
 </head>
+
 <body>
   <main role="main">
     <section class="left" aria-labelledby="loginTitle" aria-hidden="false">
@@ -125,10 +411,12 @@
             <button class="btn" id="loginBtn">Entrar</button>
           </div>
 
-          <div class="small" style="margin-top:22px; text-align:center;">Não tem conta? <a href="#" id="openRegisterLink">Registar</a></div>
+          <div class="small" style="margin-top:22px; text-align:center;">Não tem conta? <a href="#"
+              id="openRegisterLink">Registar</a></div>
           <div class="small" style="margin-top:10px; text-align:center;">
             <span>ou então </span>
-            <a href="index.html" id="guestAccessLink" style="color:var(--green); text-decoration:none">acessar sem conta</a>
+            <a href="index.html" id="guestAccessLink" style="color:var(--green); text-decoration:none">acessar sem
+              conta</a>
           </div>
         </form>
       </div>
@@ -138,11 +426,12 @@
     <div class="brand-overlay" aria-hidden="false">
       <div class="brand-inner">
         <div class="logo-wrap" aria-hidden="true">
-          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="EcoHome logo">
-            <circle cx="60" cy="60" r="54" fill="#E8F9EE" stroke="#2DB07A" stroke-width="3"/>
-            <path d="M38 64c8-12 26-12 34-6 2 1.5 6 10 2 14-6 6-20 8-30 6-6-1-10-8-6-14z" fill="#8EE0A8"/>
-            <path d="M74 34c6 2 18 10 18 18 0 0-6 2-10 0-4-2-8-12-8-18z" fill="#40C06B"/>
-            <path d="M75 30c8-2 14-8 20-14 0 0 4 6 0 12-4 6-14 14-20 14 0 0-2-4 0-12z" fill="#2DB07A"/>
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-label="EcoHome logo">
+            <circle cx="60" cy="60" r="54" fill="#E8F9EE" stroke="#2DB07A" stroke-width="3" />
+            <path d="M38 64c8-12 26-12 34-6 2 1.5 6 10 2 14-6 6-20 8-30 6-6-1-10-8-6-14z" fill="#8EE0A8" />
+            <path d="M74 34c6 2 18 10 18 18 0 0-6 2-10 0-4-2-8-12-8-18z" fill="#40C06B" />
+            <path d="M75 30c8-2 14-8 20-14 0 0 4 6 0 12-4 6-14 14-20 14 0 0-2-4 0-12z" fill="#2DB07A" />
           </svg>
         </div>
         <h2>EcoHome</h2>
@@ -154,11 +443,12 @@
       <!-- brand inside aside for mobile only -->
       <div class="brand-mobile brand" aria-hidden="true">
         <div class="logo-wrap">
-          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="EcoHome logo">
-            <circle cx="60" cy="60" r="54" fill="#E8F9EE" stroke="#2DB07A" stroke-width="3"/>
-            <path d="M38 64c8-12 26-12 34-6 2 1.5 6 10 2 14-6 6-20 8-30 6-6-1-10-8-6-14z" fill="#8EE0A8"/>
-            <path d="M74 34c6 2 18 10 18 18 0 0-6 2-10 0-4-2-8-12-8-18z" fill="#40C06B"/>
-            <path d="M75 30c8-2 14-8 20-14 0 0 4 6 0 12-4 6-14 14-20 14 0 0-2-4 0-12z" fill="#2DB07A"/>
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-label="EcoHome logo">
+            <circle cx="60" cy="60" r="54" fill="#E8F9EE" stroke="#2DB07A" stroke-width="3" />
+            <path d="M38 64c8-12 26-12 34-6 2 1.5 6 10 2 14-6 6-20 8-30 6-6-1-10-8-6-14z" fill="#8EE0A8" />
+            <path d="M74 34c6 2 18 10 18 18 0 0-6 2-10 0-4-2-8-12-8-18z" fill="#40C06B" />
+            <path d="M75 30c8-2 14-8 20-14 0 0 4 6 0 12-4 6-14 14-20 14 0 0-2-4 0-12z" fill="#2DB07A" />
           </svg>
         </div>
         <h2>EcoHome</h2>
@@ -176,22 +466,24 @@
             <label for="reg_email">Email</label>
             <input class="input" id="reg_email" name="reg_email" type="email" placeholder="seu@email.com" required />
           </div>
-            <div class="field">
-              <label for="reg_phone">Telefone</label>
-              <input class="input" id="reg_phone" name="reg_phone" type="tel" placeholder="XXX-XXX-XXX" />
-            </div>
-            <div class="field">
-              <label for="reg_password">Senha</label>
-              <input class="input" id="reg_password" name="reg_password" type="password" placeholder="Senha" required />
-            </div>
-            <div class="field">
-              <label for="reg_confirm_password">Confirmar senha</label>
-              <input class="input" id="reg_confirm_password" name="reg_confirm_password" type="password" placeholder="Confirme a senha" required />
-            </div>
+          <div class="field">
+            <label for="reg_phone">Telefone</label>
+            <input class="input" id="reg_phone" name="reg_phone" type="tel" placeholder="XXX-XXX-XXX" />
+          </div>
+          <div class="field">
+            <label for="reg_password">Senha</label>
+            <input class="input" id="reg_password" name="reg_password" type="password" placeholder="Senha" required />
+          </div>
+          <div class="field">
+            <label for="reg_confirm_password">Confirmar senha</label>
+            <input class="input" id="reg_confirm_password" name="reg_confirm_password" type="password"
+              placeholder="Confirme a senha" required />
+          </div>
           <div style="margin-top:28px; display:flex; justify-content:center;">
             <button class="btn" id="registerBtn">Registar</button>
           </div>
-          <div class="small" style="margin-top:12px; text-align:center;">Já possui conta? <a href="#" id="backToLoginLink">Fazer login</a></div>
+          <div class="small" style="margin-top:12px; text-align:center;">Já possui conta? <a href="#"
+              id="backToLoginLink">Fazer login</a></div>
         </form>
       </div>
     </section>
@@ -199,23 +491,23 @@
 
   <script>
     // helper to toggle register reveal (right section mirrors left)
-    function openRegister(){
+    function openRegister() {
       const right = document.querySelector('.right');
       const left = document.querySelector('.left');
       const overlay = document.querySelector('.brand-overlay');
-      if(right) right.setAttribute('aria-hidden','false');
-      if(left) left.setAttribute('aria-hidden','true');
-      if(overlay) overlay.setAttribute('aria-hidden','true');
+      if (right) right.setAttribute('aria-hidden', 'false');
+      if (left) left.setAttribute('aria-hidden', 'true');
+      if (overlay) overlay.setAttribute('aria-hidden', 'true');
       // focus first input after animation (only if window/tab is active)
-      setTimeout(()=>{ const f = document.querySelector('#registerForm #reg_name'); if(f && document.hasFocus && document.hasFocus()) f.focus(); }, 260);
+      setTimeout(() => { const f = document.querySelector('#registerForm #reg_name'); if (f && document.hasFocus && document.hasFocus()) f.focus(); }, 260);
     }
-    function closeRegister(){
+    function closeRegister() {
       const right = document.querySelector('.right');
       const left = document.querySelector('.left');
       const overlay = document.querySelector('.brand-overlay');
-      if(right) right.setAttribute('aria-hidden','true');
-      if(left) left.setAttribute('aria-hidden','false');
-      if(overlay) overlay.setAttribute('aria-hidden','false');
+      if (right) right.setAttribute('aria-hidden', 'true');
+      if (left) left.setAttribute('aria-hidden', 'false');
+      if (overlay) overlay.setAttribute('aria-hidden', 'false');
     }
     // Pequena interação: foco no primeiro input e ação do botão (demo)
     // Só foca automaticamente se a janela/tabs estiver ativa para não interceptar digitação em outras janelas
@@ -223,41 +515,42 @@
       const _email = document.getElementById('email');
       if (_email) _email.focus();
     }
-    document.getElementById('loginBtn').addEventListener('click', ()=>{
+    document.getElementById('loginBtn').addEventListener('click', () => {
       // Para já apenas demonstração — pode integrar com API de autenticação
       const email = document.getElementById('email').value.trim();
       const pass = document.getElementById('password').value;
-      if(!email || !pass){ alert('Preencha email e senha.'); return; }
+      if (!email || !pass) { alert('Preencha email e senha.'); return; }
       alert('Login simulado para: ' + email + '\n(Implementar autenticação server-side)');
     });
 
     // open register link
-    document.getElementById('openRegisterLink').addEventListener('click', (e)=>{ e.preventDefault(); openRegister(); });
+    document.getElementById('openRegisterLink').addEventListener('click', (e) => { e.preventDefault(); openRegister(); });
     const backToLoginLink = document.getElementById('backToLoginLink');
-    if(backToLoginLink) backToLoginLink.addEventListener('click', (e)=>{ e.preventDefault(); closeRegister(); });
+    if (backToLoginLink) backToLoginLink.addEventListener('click', (e) => { e.preventDefault(); closeRegister(); });
     // register action with validation and API call
-    document.getElementById('registerBtn').addEventListener('click', async ()=>{
+    document.getElementById('registerBtn').addEventListener('click', async () => {
       const name = document.querySelector('#registerForm #reg_name').value.trim();
       const email = document.querySelector('#registerForm #reg_email').value.trim();
       const phone = document.querySelector('#registerForm #reg_phone').value.trim();
       const pass = document.querySelector('#registerForm #reg_password').value;
       const pass2 = document.querySelector('#registerForm #reg_confirm_password').value;
-      if(!name || !email || !pass || !pass2){ alert('Preencha nome, email e ambas as senhas.'); return; }
-      if(pass !== pass2){ alert('As senhas não coincidem.'); return; }
+      if (!name || !email || !pass || !pass2) { alert('Preencha nome, email e ambas as senhas.'); return; }
+      if (pass !== pass2) { alert('As senhas não coincidem.'); return; }
 
       // Simulação local da criação de conta (sem comunicação server-side)
-      try{
+      try {
         // Simular atraso de rede
-        await new Promise(res=>setTimeout(res, 350));
+        await new Promise(res => setTimeout(res, 350));
         // Gerar um id fictício e retornar sucesso
         const data = { id: Date.now() };
         alert('Conta criada com sucesso (ID: ' + (data.id || '?') + '). Pode agora iniciar sessão.');
         closeRegister();
-      }catch(err){
+      } catch (err) {
         console.error('Register simulation error:', err);
         alert('Ocorreu um erro ao criar a conta localmente.');
       }
     });
   </script>
 </body>
+
 </html>

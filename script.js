@@ -337,6 +337,7 @@ window.addEventListener('load', ()=>{
                 let latestAgg = null;
                 if(latestYM) latestAgg = aggregateForYearMonth(latestYM.year, latestYM.month, allInvoices);
                 const invoiceCostTotal = (latestAgg && Number(latestAgg.cost)) ? Number(latestAgg.cost) : 0;
+                const invoiceConsumptionTotal = (latestAgg && Number(latestAgg.consumption)) ? Number(latestAgg.consumption) : 0;
 
                 // use global icon map (defined in renderLegend) — recreate similar map here
                 const roomIcons = {
@@ -356,10 +357,12 @@ window.addEventListener('load', ()=>{
                     const name = escapeHtml(it.name || 'Sem nome');
                     const kwhVal = (typeof it.monthlyKwh === 'number') ? it.monthlyKwh : Number(it.monthlyKwh) || 0;
                     const kwhStr = Number(kwhVal).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+                    // percent within division (for display)
                     const percent = divisionTotal > 0 ? (kwhVal / divisionTotal) * 100 : 0;
                     const pctStr = `${percent.toFixed(1)}%`;
-                    const costShare = invoiceCostTotal ? (invoiceCostTotal * (percent / 100)) : 0;
-                    const costStr = invoiceCostTotal ? `€${costShare.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})} da fatura` : `€0.00 da fatura`;
+                    // compute cost share based on proportion of the whole invoice consumption (more realistic)
+                    const costShare = (invoiceConsumptionTotal > 0 && invoiceCostTotal > 0) ? (invoiceCostTotal * (kwhVal / invoiceConsumptionTotal)) : 0;
+                    const costStr = (invoiceConsumptionTotal > 0 && invoiceCostTotal > 0) ? `€${costShare.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})} da fatura` : `€0.00 da fatura`;
                     // potência e horas: tentar extrair números
                     const powerNum = (function(p){ const n = parseFloat(String(p||'').replace(/[^0-9\.\-]/g,'')); return isNaN(n) ? (p||'') : `${Math.round(n)}W`; })(it.power);
                     const hoursNum = (function(h){ const n = parseFloat(String(h||'').replace(/[^0-9\.\-]/g,'')); return isNaN(n) ? (h||'') : `${n}h/dia`; })(it.hours);

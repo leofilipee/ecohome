@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header class="topbar">
         <div class="topbar-inner">
@@ -15,8 +17,12 @@
                 <div class="brand-text">EcoHome</div>
             </a>
             <div style="display:flex;align-items:center;gap:12px">
-                <a href="#" id="openHelpBtn" class="help-link" aria-label="Ajuda" style="display:flex;align-items:center;justify-content:center"><img src="images/help.png" alt="Ajuda" style="width:30px;height:30px;filter:brightness(0);display:block"></a>
-                <a href="profile.html" class="profile"> <div class="avatar"><img id="topbarAvatarImg" src="images/user.png" alt="Perfil"></div> </a>
+                <a href="#" id="openHelpBtn" class="help-link" aria-label="Ajuda"
+                    style="display:flex;align-items:center;justify-content:center"><img src="images/help.png"
+                        alt="Ajuda" style="width:30px;height:30px;filter:brightness(0);display:block"></a>
+                <a href="profile.html" class="profile">
+                    <div class="avatar"><img id="topbarAvatarImg" src="images/user.png" alt="Perfil"></div>
+                </a>
             </div>
         </div>
     </header>
@@ -44,7 +50,7 @@
             <button id="openInvoiceBtn" class="btn primary">+ Inserir nova fatura</button>
             <button id="viewInvoicesBtn" class="btn secondary">Ver faturas</button>
             <button class="btn secondary">Dicas</button>
-            
+
         </section>
 
         <section class="panels">
@@ -85,7 +91,9 @@
     <div id="divisionModal" class="modal-overlay" aria-hidden="true">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="divisionModalTitle">
             <button class="modal-close" aria-label="Fechar">×</button>
-            <div class="modal-header"><h3 id="divisionModalTitle">Equipamentos</h3></div>
+            <div class="modal-header">
+                <h3 id="divisionModalTitle">Equipamentos</h3>
+            </div>
             <div class="modal-body">
                 <div id="divisionModalBody">
                     <!-- tabela de equipamentos será injetada aqui -->
@@ -154,7 +162,9 @@
     <div id="newInvoiceModal" class="modal-overlay" aria-hidden="true">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoiceTitle">
             <button class="modal-close" aria-label="Fechar">×</button>
-            <div class="modal-header"><h3 id="invoiceTitle">Nova Fatura</h3></div>
+            <div class="modal-header">
+                <h3 id="invoiceTitle">Nova Fatura</h3>
+            </div>
             <div class="modal-body">
                 <form id="newInvoiceForm">
                     <label>Mês
@@ -170,45 +180,51 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn modal-cancel">Cancelar</button>
-                <button type="submit" form="newInvoiceForm" class="btn primary modal-save-invoice">Guardar Fatura</button>
+                <button type="submit" form="newInvoiceForm" class="btn primary modal-save-invoice">Guardar
+                    Fatura</button>
             </div>
         </div>
     </div>
-            <!-- Modal: Ver Faturas -->
-            <div id="viewInvoicesModal" class="modal-overlay" aria-hidden="true">
-                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="viewInvoicesTitle">
-                    <button class="modal-close" aria-label="Fechar">×</button>
-                    <div class="modal-header"><h3 id="viewInvoicesTitle">Faturas Gravadas</h3></div>
-                    <div class="modal-body">
-                        <div class="invoice-list">
-                            <table class="invoice-table" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Ordem</th>
-                                        <th data-sort="month" class="sortable" style="text-align:left">Mês</th>
-                                        <th data-sort="consumption" class="sortable">Consumo (kWh)</th>
-                                        <th data-sort="cost" class="sortable">Custo (€)</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="invoicesTableBody">
-                                    <!-- Rows injected by script -->
-                                </tbody>
-                            </table>
-                            <div class="empty-state" style="display:none;margin-top:12px;color:var(--muted)">Não existem faturas registadas.</div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn modal-cancel">Fechar</button>
-                    </div>
+    <!-- Modal: Ver Faturas -->
+    <div id="viewInvoicesModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="viewInvoicesTitle">
+            <button class="modal-close" aria-label="Fechar">×</button>
+            <div class="modal-header">
+                <h3 id="viewInvoicesTitle">Faturas Gravadas</h3>
+            </div>
+            <div class="modal-body">
+                <div class="invoice-list">
+                    <table class="invoice-table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Ordem</th>
+                                <th data-sort="month" class="sortable" style="text-align:left">Mês</th>
+                                <th data-sort="consumption" class="sortable">Consumo (kWh)</th>
+                                <th data-sort="cost" class="sortable">Custo (€)</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoicesTableBody">
+                            <!-- Rows injected by script -->
+                        </tbody>
+                    </table>
+                    <div class="empty-state" style="display:none;margin-top:12px;color:var(--muted)">Não existem faturas
+                        registadas.</div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-cancel">Fechar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal: Comparar Anos -->
     <div id="compareModal" class="modal-overlay" aria-hidden="true">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
             <button class="modal-close" aria-label="Fechar">×</button>
-            <div class="modal-header"><h3 id="compareTitle">Comparar Anos</h3></div>
+            <div class="modal-header">
+                <h3 id="compareTitle">Comparar Anos</h3>
+            </div>
             <div class="modal-body">
                 <form id="compareForm">
                     <div id="compareSelects" class="compare-selects">
@@ -222,7 +238,8 @@
                     <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center">
                         <div style="display:flex;gap:8px;align-items:center">
                             <button type="button" id="addCompareYear" class="btn">Adicionar</button>
-                            <button type="button" id="removeCompareYear" class="btn" style="display:none">Remover</button>
+                            <button type="button" id="removeCompareYear" class="btn"
+                                style="display:none">Remover</button>
                         </div>
                         <div style="display:flex;gap:8px">
                             <button type="button" class="btn modal-cancel">Cancelar</button>
@@ -244,8 +261,9 @@
             </div>
             <div class="modal-body">
                 <h4>Bem-vindo ao EcoHome!</h4>
-                <p>Esta plataforma ajuda-o a controlar e otimizar o consumo energético da sua casa. Aqui estão algumas dicas para começar:</p>
-                
+                <p>Esta plataforma ajuda-o a controlar e otimizar o consumo energético da sua casa. Aqui estão algumas
+                    dicas para começar:</p>
+
                 <h5>📊 Dashboard Principal</h5>
                 <ul>
                     <li><strong>Consumo Total:</strong> Visualize o consumo total de energia do mês atual</li>
@@ -275,7 +293,8 @@
                     <li>Gere todos os seus equipamentos numa única vista</li>
                 </ul>
 
-                <p><strong>Dica:</strong> Mantenha os dados atualizados para obter recomendações mais precisas e identificar oportunidades de poupança!</p>
+                <p><strong>Dica:</strong> Mantenha os dados atualizados para obter recomendações mais precisas e
+                    identificar oportunidades de poupança!</p>
             </div>
         </div>
     </div>
@@ -283,19 +302,22 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
-    <!-- Modal: Confirmar Edição de Fatura -->
-    <div id="confirmEditModal" class="modal-overlay" aria-hidden="true">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmEditTitle">
-            <button class="modal-close" aria-label="Fechar">×</button>
-            <div class="modal-header"><h3 id="confirmEditTitle">Confirmar alteração</h3></div>
-            <div class="modal-body">
-                <p>Tem a certeza que deseja gravar as alterações nesta fatura?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn modal-cancel">Cancelar</button>
-                <button type="button" id="confirmEditBtn" class="btn primary">Confirmar</button>
-            </div>
+<!-- Modal: Confirmar Edição de Fatura -->
+<div id="confirmEditModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmEditTitle">
+        <button class="modal-close" aria-label="Fechar">×</button>
+        <div class="modal-header">
+            <h3 id="confirmEditTitle">Confirmar alteração</h3>
+        </div>
+        <div class="modal-body">
+            <p>Tem a certeza que deseja gravar as alterações nesta fatura?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn modal-cancel">Cancelar</button>
+            <button type="button" id="confirmEditBtn" class="btn primary">Confirmar</button>
         </div>
     </div>
-    <!-- moved viewInvoicesModal into body earlier; removed duplicate trailing block -->
+</div>
+<!-- moved viewInvoicesModal into body earlier; removed duplicate trailing block -->
