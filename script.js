@@ -168,7 +168,7 @@ window.addEventListener('load', ()=>{
         list.innerHTML = '';
         // when there are no equipments, show a helpful instruction message
         if(!labels || labels.length === 0){
-            list.innerHTML = `<div class="legend-empty">Nenhum equipamento registado. Vá até a página <a href="profile.html">Perfil</a> e clique em "Adicionar novo equipamento" para visualizar os seus dados de consumo.</div>`;
+            list.innerHTML = `<div class="legend-empty">Nenhum equipamento registado. Clica na opção "Adicionar novo equipamento" logo acima para visualizar os seus dados de consumo.</div>`;
             return;
         }
         const total = values.reduce((s,v)=>s+v,0) || 1;
