@@ -22,6 +22,9 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     color: #0f172a
 }
 
@@ -128,7 +131,18 @@ body {
 .container {
     max-width: 1100px;
     margin: 28px auto;
-    padding: 0 20px
+    padding: 0 20px;
+}
+
+/* Faz o main ocupar o espaço disponível, empurrando o footer para o fim da viewport quando necessário */
+main {
+    flex: 1 0 auto;
+    display: block;
+}
+
+/* Garantir que o footer não flutue caso o conteúdo seja curto */
+.footer {
+    /* Se desejar, pode ajustar padding/altura aqui */
 }
 
 .metrics {
