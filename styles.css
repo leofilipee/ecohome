@@ -14,7 +14,7 @@
 }
 
 body {
-    font-family: 'Poppins', system-ui, Inter, Arial, sans-serif;
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     /* background image with white overlay (semi-opaque) using multiple backgrounds */
     background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.9)), url('images/background.jpg');
     background-size: cover;
@@ -138,11 +138,6 @@ body {
 main {
     flex: 1 0 auto;
     display: block;
-}
-
-/* Garantir que o footer não flutue caso o conteúdo seja curto */
-.footer {
-    /* Se desejar, pode ajustar padding/altura aqui */
 }
 
 .metrics {
@@ -462,6 +457,71 @@ main {
 
     .panels {
         grid-template-columns: 1fr
+    }
+}
+
+/* Ajustes adicionais para mobile: garantir que cards, painéis e tabelas não ultrapassem a largura */
+@media (max-width:900px) {
+    .container {
+        padding-left: 14px;
+        padding-right: 14px;
+        margin: 18px auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card, .panel, .profile-card, .profile-section, main, .panels {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* Garantir que imagens e ícones não extrapolem */
+    img, .logo img, .avatar img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Tabelas responsivas: permitir scroll horizontal e quebrar palavras longas nas células */
+    table {
+        width: 100%;
+        table-layout: auto;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    /* Forçar contêiner rolável se ainda houver conteúdo largo (ex: muitas colunas) */
+    .panel > div, .panel > section, .panel, .profile-section > div {
+        overflow-x: auto;
+    }
+}
+
+/* Específico: na versão mobile, tabela de equipamentos mantém células em uma linha e pode scrollar horizontalmente */
+@media (max-width:900px) {
+    .profile-section table, .panel table {
+        min-width: 720px; /* força largura mínima para evitar compressão extrema */
+        width: auto;
+        table-layout: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .profile-section table th, .profile-section table td,
+    .panel table th, .panel table td {
+        white-space: nowrap; /* evita quebra de linha nas células */
+    }
+
+    /* garantir que o wrapper permita scroll horizontal suave */
+    .profile-section, .panel {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -1213,4 +1273,14 @@ tr.dragging {
     margin: 0;
     color: #6b7280;
     font-size: 14px;
+}
+
+/* Garantir que elementos de formulário e controlos usem a mesma fonte (herdam do body) */
+button, input, textarea, select, optgroup, option, label {
+    font-family: inherit;
+}
+
+/* Forçar que links, listas, cabeçalhos e pequenos componentes também herdem consistentemente */
+html, h1, h2, h3, h4, h5, h6, p, span, a, div, li {
+    font-family: inherit;
 }
